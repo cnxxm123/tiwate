@@ -14,7 +14,6 @@ from game.data import (
     CHARACTERS, ELEMENTS, RESONANCES, STAGES, MAX_LEVEL, get_exp_books_for_level,
     TD_TOWER_STATS, TD_MAPS, TD_ENEMY_STATS, TD_REACTIONS
 )
-from game.engine import BattleEngine  # 保留兼容
 from game.td_engine import TDEngine
 from game.save import SaveManager, create_new_game
 
