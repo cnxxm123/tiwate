@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# 用户存档
+data/saves/
+
+# IDE
+.vscode/
+.idea/
+
+# 旧版网页文件
+app.py
+static/
+templates/
