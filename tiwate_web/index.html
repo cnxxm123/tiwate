@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>提瓦特放置 - 塔防</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- 顶部资源栏 -->
+    <div id="top-bar">
+        <span class="title">✦ 提瓦特放置 - 塔防</span>
+        <div class="resources">
+            <span class="res-item" id="res-mora">🪙 0</span>
+            <span class="res-item" id="res-gems">💎 0</span>
+            <span class="res-item" id="res-books">📘 0</span>
+            <span class="res-item" id="res-resin">⚗️ 0/160</span>
+            <span class="res-item" id="res-ar">⭐ Lv.1</span>
+        </div>
+    </div>
+
+    <!-- 主内容区 -->
+    <div id="content">
+        <!-- 关卡选择面板 -->
+        <div id="stage-panel">
+            <div class="panel-title">选择关卡</div>
+            <div id="stage-grid"></div>
+            <button id="btn-enter">🗺️ 进入地图</button>
+        </div>
+
+        <!-- 战斗面板（默认隐藏） -->
+        <div id="battle-panel" class="hidden">
+            <div id="battle-top">
+                <span class="info-item gold" id="td-gold">💰 0</span>
+                <span class="info-item" id="td-wave">波次: 0/0</span>
+                <span class="info-item lives" id="td-lives">❤️ 20</span>
+                <span class="spacer"></span>
+                <span class="info-item" id="td-info" style="color:#8a8a9a;font-size:11px;"></span>
+                <button id="btn-back">返回选关</button>
+                <button id="btn-start">▶ 开始出怪</button>
+            </div>
+            <div id="battle-mid">
+                <canvas id="battle-canvas"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部栏 -->
+    <div id="bottom-bar">
+        <button id="btn-daily">📋 每日委托 (+20000🪙)</button>
+        <button id="btn-save">💾 保存游戏</button>
+        <span class="play-time" id="play-time">游玩: 0分</span>
+    </div>
+
+    <!-- 脚本 -->
+    <script src="js/data.js"></script>
+    <script src="js/save.js"></script>
+    <script src="js/engine.js"></script>
+    <script src="js/battle.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

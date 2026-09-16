@@ -255,6 +255,27 @@ class Enemy:
         self.def_down_timer = duration
 
 
+class Projectile:
+    """箭矢/弹道：从塔飞向目标的飞行物"""
+
+    def __init__(self, start_x, start_y, target_x, target_y, color="#fff"):
+        self.x = start_x
+        self.y = start_y
+        self.start_x = start_x
+        self.start_y = start_y
+        self.target_x = target_x
+        self.target_y = target_y
+        self.color = color
+        self.progress = 0  # 0→1，1 表示到达
+        self.speed = 8  # 每秒前进的比例
+
+    def update(self, dt):
+        self.progress += self.speed * dt
+        self.x = self.start_x + (self.target_x - self.start_x) * min(self.progress, 1)
+        self.y = self.start_y + (self.target_y - self.start_y) * min(self.progress, 1)
+        return self.progress >= 1  # 返回是否到达
+
+
 class TDEngine:
     """塔防游戏引擎（陷阱+塔版本）"""
 
@@ -285,6 +306,7 @@ class TDEngine:
         self.game_time = 0
 
         self.effects = []
+        self.projectiles = []
         self.kill_count = 0
         self.gold_earned = 0
 
@@ -460,6 +482,11 @@ class TDEngine:
                     actual = target.take_damage(dmg, tower.element)
                     self._check_enemy_reaction(target, tower.element)
                     tower.reset_cooldown()
+                    # 生成箭矢弹道
+                    self.projectiles.append(Projectile(
+                        tower.px, tower.py, target.px, target.py,
+                        color=ELEMENTS[tower.element]["color"]
+                    ))
                     if actual > 0:
                         self._add_effect("damage", target.px, target.py,
                                          f"-{actual}", ELEMENTS[tower.element]["color"])
@@ -505,6 +532,8 @@ class TDEngine:
         self.effects = [ef for ef in self.effects if ef["timer"] > 0]
         for ef in self.effects:
             ef["timer"] -= dt
+        # 更新弹道，移除已到达的
+        self.projectiles = [p for p in self.projectiles if not p.update(dt)]
         self.towers = [t for t in self.towers if not t.is_destroyed()]
 
     def resize(self, new_cell_size):
@@ -547,6 +576,14 @@ class TDEngine:
         for ef in self.effects:
             ef["px"] *= ratio
             ef["py"] *= ratio
+
+        for p in self.projectiles:
+            p.x *= ratio
+            p.y *= ratio
+            p.start_x *= ratio
+            p.start_y *= ratio
+            p.target_x *= ratio
+            p.target_y *= ratio
 
     def get_state(self):
         return {

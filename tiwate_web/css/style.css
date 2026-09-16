@@ -1,0 +1,289 @@
+/* ==================== 基础样式 ==================== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background: #0a0a14;
+    color: #e0d8c8;
+    font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* ==================== 顶部资源栏 ==================== */
+#top-bar {
+    background: #141428;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    flex-shrink: 0;
+}
+#top-bar .title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #f0d68a;
+}
+#top-bar .resources {
+    display: flex;
+    gap: 16px;
+}
+#top-bar .res-item {
+    font-size: 12px;
+    color: #8a8a9a;
+}
+
+/* ==================== 底部栏 ==================== */
+#bottom-bar {
+    background: #141428;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    flex-shrink: 0;
+}
+#bottom-bar button {
+    background: transparent;
+    border: none;
+    color: #8a8a9a;
+    font-size: 12px;
+    cursor: pointer;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-family: inherit;
+}
+#bottom-bar button:hover { background: #1a1a35; }
+#bottom-bar .play-time {
+    font-size: 11px;
+    color: #8a8a9a;
+}
+
+/* ==================== 主内容区 ==================== */
+#content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 8px 12px 0;
+    overflow: hidden;
+    background: #141428;
+    margin: 0;
+    border-radius: 10px 10px 0 0;
+}
+
+/* ==================== 关卡选择 ==================== */
+#stage-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+#stage-panel .panel-title {
+    font-size: 15px;
+    font-weight: bold;
+    color: #f0d68a;
+    margin-bottom: 8px;
+}
+#stage-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    flex: 1;
+}
+.stage-card {
+    background: #1a1a35;
+    border: 2px solid #2a2a45;
+    border-radius: 8px;
+    padding: 12px;
+    cursor: pointer;
+    text-align: center;
+    transition: border-color 0.2s;
+}
+.stage-card:hover { border-color: #d4a843; }
+.stage-card.selected { border-color: #d4a843; background: #1e1e3a; }
+.stage-card.locked {
+    background: #121224 !important;
+    cursor: not-allowed;
+}
+.stage-card.locked:hover { border-color: #2a2a45; }
+.stage-card .name {
+    font-size: 12px;
+    font-weight: bold;
+    color: #e0d8c8;
+    margin-bottom: 4px;
+}
+.stage-card.locked .name { color: #555; }
+.stage-card .info {
+    font-size: 10px;
+    color: #8a8a9a;
+}
+.stage-card .gold-info {
+    font-size: 10px;
+    color: #d4a843;
+}
+#btn-enter {
+    background: #8a6520;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 12px;
+    font-family: inherit;
+}
+#btn-enter:hover { background: #a08030; }
+
+/* ==================== 战斗面板 ==================== */
+#battle-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+#battle-panel.hidden { display: none; }
+
+#battle-top {
+    background: #1a1a35;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    border-radius: 6px;
+    margin-bottom: 6px;
+    gap: 12px;
+    flex-shrink: 0;
+}
+#battle-top .info-item {
+    font-size: 13px;
+    font-weight: bold;
+}
+#battle-top .gold { color: #d4a843; }
+#battle-top .lives { color: #ef4444; }
+#battle-top .spacer { flex: 1; }
+#battle-top button {
+    border: none;
+    padding: 6px 14px;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: inherit;
+}
+#btn-start {
+    background: #8a6520;
+    color: #fff;
+}
+#btn-start:hover { background: #a08030; }
+#btn-start:disabled { background: #3a3020; color: #666; cursor: not-allowed; }
+#btn-back {
+    background: transparent;
+    color: #8a8a9a;
+    border: 1px solid #2a2a45 !important;
+}
+#btn-back:hover { background: #1a1a35; }
+
+#battle-mid {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0a0a14;
+    border-radius: 4px;
+    overflow: hidden;
+}
+#battle-canvas {
+    display: block;
+}
+
+/* ==================== 弹窗 ==================== */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+.modal-box {
+    background: #1a1a35;
+    border: 1px solid #2a2a45;
+    border-radius: 10px;
+    padding: 20px 28px;
+    min-width: 300px;
+    text-align: center;
+}
+.modal-box h3 {
+    font-size: 16px;
+    color: #f0d68a;
+    margin-bottom: 12px;
+}
+.modal-box p {
+    font-size: 13px;
+    color: #e0d8c8;
+    line-height: 1.6;
+    margin-bottom: 16px;
+}
+.modal-box button {
+    background: #8a6520;
+    color: #fff;
+    border: none;
+    padding: 8px 24px;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: inherit;
+    margin: 0 6px;
+}
+.modal-box button:hover { background: #a08030; }
+.modal-box button.cancel {
+    background: transparent;
+    border: 1px solid #2a2a45;
+    color: #8a8a9a;
+}
+.modal-box button.cancel:hover { background: #1a1a35; }
+
+/* ==================== 右键菜单 ==================== */
+.context-menu {
+    position: fixed;
+    background: #141428;
+    border: 1px solid #2a2a45;
+    border-radius: 6px;
+    padding: 4px 0;
+    z-index: 200;
+    min-width: 180px;
+}
+.context-menu .menu-item {
+    padding: 8px 16px;
+    font-size: 13px;
+    cursor: pointer;
+    color: #e0d8c8;
+}
+.context-menu .menu-item:hover {
+    background: #2a2a45;
+    color: #f0d68a;
+}
+
+/* ==================== 提示消息 ==================== */
+.toast {
+    position: fixed;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #141428;
+    border: 1px solid #2a2a45;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 13px;
+    color: #f0d68a;
+    z-index: 300;
+    animation: fadein 0.3s;
+}
+@keyframes fadein {
+    from { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}

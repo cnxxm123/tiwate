@@ -3,6 +3,7 @@
 """
 import time
 import random
+import math
 import copy
 from tkinter import Menu, messagebox
 
@@ -427,6 +428,30 @@ class BattleScreen:
                                text=ef["text"],
                                font=("Microsoft YaHei", max(8, font_size)),
                                fill=ef["color"])
+
+        # ── 弹道（箭矢）──
+        for p in battle.projectiles:
+            # 箭杆：从起点到当前位置画一条线
+            dx = p.x - p.start_x
+            dy = p.y - p.start_y
+            length = math.hypot(dx, dy)
+            if length > 0:
+                # 箭矢角度
+                angle = math.atan2(dy, dx)
+                arrow_len = cs * 0.25
+                # 箭杆
+                canvas.create_line(p.start_x, p.start_y, p.x, p.y,
+                                   fill=p.color, width=2)
+                # 箭头（三角形）
+                tip_x = p.x
+                tip_y = p.y
+                canvas.create_polygon(
+                    tip_x, tip_y,
+                    tip_x - arrow_len * math.cos(angle - 0.5),
+                    tip_y - arrow_len * math.sin(angle - 0.5),
+                    tip_x - arrow_len * math.cos(angle + 0.5),
+                    tip_y - arrow_len * math.sin(angle + 0.5),
+                    fill=p.color, outline="")
 
     # ============================================================
     #  结算

@@ -33,7 +33,7 @@ BUILDING_DEFS = {
         "element": "fire",
         "cost": 200,
         "range": 2.5,
-        "atk_speed": 1.0,
+        "atk_speed": 2.0,
         "damage": 60,
         "icon": "🏹",
         "color": "#cc4444",
