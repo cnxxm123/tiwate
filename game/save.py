@@ -65,49 +65,26 @@ class SaveManager:
 
 
 def create_new_game():
-    """创建新游戏状态"""
+    """创建新游戏状态（陷阱+塔版本）"""
     return {
         "player_name": "旅行者",
         "adventure_rank": 1,
         "adventure_exp": 0,
-        "play_time": 0,  # 总游玩时间（秒）
+        "play_time": 0,
         "last_online": time.time(),
         "resources": {
-            "mora": 25000,         # 摩拉（初始可购买一个五星或两个四星）
-            "primogems": 0,        # 原石（已移除抽卡，保留兼容）
-            "stardust": 0,         # 星尘
-            "starglitter": 0,      # 星辉
-            "resin": 160,          # 树脂
-            "exp_books": 20,       # 经验书
+            "mora": 10000,
+            "primogems": 0,
+            "resin": 160,
+            "exp_books": 5,
             "resin_last_update": time.time(),
         },
-        "characters": {
-            # character_id: {level, constellation, exp, obtained_at}
-            # 初始赠送一个四星角色
-            "bennett": {"level": 1, "constellation": 0, "exp": 0},
-        },
-        "weapons": {},
-        "artifacts": {},
-        "team": ["bennett"],  # 当前队伍（最多4人）
         "stage_progress": {
-            "current_stage": 1,             # 当前关卡
-            "highest_stage_unlocked": 1,    # 最高解锁关卡
-            "completed_stages": [],         # 已完成的关卡ID列表
-        },
-        "gacha_pity": {
-            "standard": {"pity_5": 0, "pity_4": 0, "guaranteed": False},
-            "limited": {"pity_5": 0, "pity_4": 0, "guaranteed": False},
-            "beginner": {"pulls_used": 0, "pity_5": 0, "pity_4": 0},
+            "highest_stage_unlocked": 1,
+            "completed_stages": [],
         },
         "dailies": {
-            "commissions_done": 0,          # 今日已完成委托数
+            "commissions_done": 0,
             "last_daily_reset": time.time(),
-            "weekly_bosses_done": 0,
-            "last_weekly_reset": time.time(),
-        },
-        "offline_rewards": {
-            "accumulated_seconds": 0,       # 累积离线时间
-            "max_accumulate": 43200,        # 最多12小时
-            "last_collect_time": time.time(),
         },
     }
