@@ -1,0 +1,85 @@
+{
+  "player_name": "旅行者",
+  "adventure_rank": 6,
+  "adventure_exp": 59,
+  "play_time": 0,
+  "last_online": 1789650162.3811202,
+  "resources": {
+    "mora": 26460,
+    "primogems": 226,
+    "stardust": 0,
+    "starglitter": 0,
+    "resin": 160,
+    "exp_books": 33,
+    "resin_last_update": 1789650158.8266459
+  },
+  "characters": {
+    "bennett": {
+      "level": 6,
+      "constellation": 0,
+      "exp": 0
+    },
+    "diona": {
+      "level": 3,
+      "constellation": 0,
+      "exp": 0
+    },
+    "fischl": {
+      "level": 2,
+      "constellation": 0,
+      "exp": 0
+    },
+    "lyney": {
+      "level": 2,
+      "constellation": 0,
+      "exp": 0
+    }
+  },
+  "weapons": {},
+  "artifacts": {},
+  "team": [
+    "diona",
+    "bennett",
+    "fischl"
+  ],
+  "stage_progress": {
+    "current_stage": 3,
+    "highest_stage_unlocked": 5,
+    "completed_stages": [
+      1,
+      2,
+      3,
+      4
+    ]
+  },
+  "gacha_pity": {
+    "standard": {
+      "pity_5": 0,
+      "pity_4": 0,
+      "guaranteed": false
+    },
+    "limited": {
+      "pity_5": 0,
+      "pity_4": 0,
+      "guaranteed": false
+    },
+    "beginner": {
+      "pulls_used": 10,
+      "pity_5": 10,
+      "pity_4": 0
+    }
+  },
+  "dailies": {
+    "commissions_done": 4,
+    "last_daily_reset": 1789482158.8608983,
+    "weekly_bosses_done": 0,
+    "last_weekly_reset": 1789482158.8608983
+  },
+  "offline_rewards": {
+    "accumulated_seconds": 0,
+    "max_accumulate": 43200,
+    "last_collect_time": 1789482158.8608983
+  },
+  "last_save_time": 1789650162.3811202,
+  "save_version": 1
+}

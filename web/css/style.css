@@ -175,6 +175,18 @@ body {
 }
 #btn-return:hover { background: #3a3a4e; }
 
+.btn-cheat {
+    background: linear-gradient(135deg, #6d28d9, #7c3aed);
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+.btn-cheat:hover { background: linear-gradient(135deg, #7c3aed, #8b5cf6); }
+
 /* ==================== Canvas 区域 ==================== */
 #canvas-wrapper {
     flex: 1;
@@ -200,7 +212,9 @@ body {
     border: 1px solid #4a4a5e;
     border-radius: 10px;
     padding: 6px 0;
-    min-width: 150px;
+    min-width: 200px;
+    max-height: 80vh;
+    overflow-y: auto;
     z-index: 500;
     box-shadow: 0 4px 20px rgba(0,0,0,0.5);
 }

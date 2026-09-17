@@ -15,6 +15,9 @@ class GameApp {
         // 返回按钮
         document.getElementById("btn-return").addEventListener("click", () => this.ui.showSelect());
 
+        // 作弊按钮：加5000金币 + 回满生命
+        document.getElementById("btn-cheat").addEventListener("click", () => this._cheat());
+
         // 开始出怪
         document.getElementById("btn-start-wave").addEventListener("click", () => this._startWave());
 
@@ -26,6 +29,7 @@ class GameApp {
         document.addEventListener("click", (e) => {
             if (!e.target.closest("#popup-menu") && !e.target.closest("#td-canvas")) {
                 this.ui.hidePopup();
+                this.renderer.clearSelection();
             }
         });
 
@@ -54,11 +58,26 @@ class GameApp {
         this.selectedMapData = map;
 
         // 初始化战斗引擎
-        const mapData = { ...this.selectedMapData, cell_size: 66 };
+        const mapData = { ...this.selectedMapData, cell_size: 80 };
         this.battle = new TDEngine(mapData);
         this.renderer.setBattle(this.battle);
         this.renderer.render();
         this._updateInfo();
+
+        // 提前启动渲染循环（让选中高亮动画可以播放）
+        if (!this.loopId) {
+            const renderLoop = () => {
+                if (!this.battle || this.battle.gameOver) {
+                    this._handleEnd();
+                    return;
+                }
+                if (this.battle.running) this.battle.update();
+                this.renderer.render();
+                this._updateInfo();
+                this.loopId = requestAnimationFrame(renderLoop);
+            };
+            this.loopId = requestAnimationFrame(renderLoop);
+        }
 
         // 隐藏开始按钮（战斗未开始）
         document.getElementById("btn-start-wave").style.display = "block";
@@ -143,7 +162,10 @@ class GameApp {
 
         if (!canPlaceTower && !canPlaceTrap && !hasBuilding) return;
 
-        this.ui.showPopupMenu(gx, gy, canPlaceTower, canPlaceTrap, hasBuilding);
+        this.renderer.selectCell(gx, gy);
+        const availTowers = this.selectedMapData.available_towers || [];
+        const availTraps = this.selectedMapData.available_traps || [];
+        this.ui.showPopupMenu(gx, gy, canPlaceTower, canPlaceTrap, hasBuilding, e.clientX, e.clientY, availTowers, availTraps);
     }
 
     _placeBuilding(bid, gx, gy) {
@@ -156,6 +178,7 @@ class GameApp {
         } else if (bdef.type === "trap") {
             this.battle.placeTrap(bid, gx, gy);
         }
+        this.renderer.clearSelection();
         this.renderer.render();
         this._updateInfo();
     }
@@ -163,7 +186,15 @@ class GameApp {
     _sellBuilding(gx, gy) {
         if (!this.battle) return;
         this.battle.sellBuilding(gx, gy);
+        this.renderer.clearSelection();
         this.renderer.render();
+        this._updateInfo();
+    }
+
+    _cheat() {
+        if (!this.battle) return;
+        this.battle.gold += 5000;
+        this.battle.lives = this.battle.maxLives;
         this._updateInfo();
     }
 

@@ -130,16 +130,27 @@ class UIManager {
         });
     }
 
-    showPopupMenu(gridX, gridY, canPlaceTower, canPlaceTrap, hasBuilding) {
-        // 根据鼠标/点击位置定位弹出菜单
-        const rect = this.canvasWrapper.getBoundingClientRect();
-        const x = rect.left + gridX * 66 + 33;
-        const y = rect.top + gridY * 66 + 33;
-
+    showPopupMenu(gridX, gridY, canPlaceTower, canPlaceTrap, hasBuilding, clickX, clickY, availTowers, availTraps) {
         this.popupGrid.textContent = `(${gridX}, ${gridY})`;
-        this.popupMenu.style.left = Math.min(x, window.innerWidth - 160) + "px";
-        this.popupMenu.style.top = Math.min(y, window.innerHeight - 120) + "px";
+
+        // 使用鼠标点击位置定位，确保在视口内
+        const menuW = 200;
+        let left = clickX || 100;
+        let top = clickY || 100;
+        if (left + menuW > window.innerWidth) left = window.innerWidth - menuW - 10;
+        if (left < 10) left = 10;
+        if (top < 10) top = 10;
+        // 先显示才能获取高度
         this.popupMenu.style.display = "block";
+        this.popupMenu.style.left = left + "px";
+        this.popupMenu.style.top = top + "px";
+        // 如果底部溢出，向上调整
+        requestAnimationFrame(() => {
+            const h = this.popupMenu.offsetHeight;
+            if (top + h > window.innerHeight - 10 && top > h + 10) {
+                this.popupMenu.style.top = (window.innerHeight - h - 10) + "px";
+            }
+        });
         this.popupMenu.dataset.gridX = gridX;
         this.popupMenu.dataset.gridY = gridY;
 
@@ -165,6 +176,7 @@ class UIManager {
             if (canPlaceTower) {
                 for (const [bid, bdef] of Object.entries(BUILDING_DEFS)) {
                     if (bdef.type !== "tower") continue;
+                    if (availTowers && availTowers.length > 0 && !availTowers.includes(bid)) continue;
                     const btn = document.createElement("div");
                     btn.className = "popup-btn";
                     btn.dataset.action = "place";
@@ -180,6 +192,7 @@ class UIManager {
             if (canPlaceTrap) {
                 for (const [bid, bdef] of Object.entries(BUILDING_DEFS)) {
                     if (bdef.type !== "trap") continue;
+                    if (availTraps && availTraps.length > 0 && !availTraps.includes(bid)) continue;
                     const btn = document.createElement("div");
                     btn.className = "popup-btn";
                     btn.dataset.action = "place";
