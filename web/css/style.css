@@ -1,0 +1,220 @@
+/* ==================== 全局 ==================== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+    background: #1a1a2e;
+    color: #e0d6c2;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* ==================== 关卡选择 ==================== */
+#stage-select {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    min-height: 100vh;
+}
+
+.stage-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #f0c060;
+    margin-bottom: 8px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.stage-subtitle {
+    font-size: 14px;
+    color: #8a8468;
+    margin-bottom: 30px;
+}
+
+.map-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    max-width: 1100px;
+    width: 100%;
+}
+
+.map-card {
+    background: linear-gradient(135deg, #2a2a3e, #1e2e3a);
+    border: 1px solid #3a3a4e;
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.map-card:hover {
+    border-color: #f0c060;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+.map-card-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #f0c060;
+    margin-bottom: 10px;
+}
+.map-card-info {
+    display: flex;
+    gap: 12px;
+    font-size: 13px;
+    color: #8a8468;
+}
+
+/* ==================== 地图预览弹窗 ==================== */
+.map-preview-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+.map-preview-card {
+    background: #222436;
+    border: 1px solid #4a4a5e;
+    border-radius: 16px;
+    padding: 30px 40px;
+    min-width: 320px;
+    text-align: center;
+}
+.map-preview-card h2 {
+    color: #f0c060;
+    font-size: 22px;
+    margin-bottom: 16px;
+}
+.map-preview-stats {
+    color: #aaa;
+    font-size: 14px;
+    line-height: 2;
+    margin-bottom: 20px;
+}
+.map-preview-btns {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+.btn-enter {
+    background: linear-gradient(135deg, #8a6520, #a08030);
+    color: #fff;
+    border: none;
+    padding: 10px 28px;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+.btn-enter:hover { background: linear-gradient(135deg, #a08030, #c0a040); }
+.btn-cancel {
+    background: #3a3a4e;
+    color: #aaa;
+    border: 1px solid #4a4a5e;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+}
+.btn-cancel:hover { background: #4a4a5e; }
+
+/* ==================== 战斗面板 ==================== */
+#battle-panel {
+    display: none;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#battle-top {
+    background: #1e2030;
+    border-bottom: 1px solid #2a2a3e;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-shrink: 0;
+}
+.battle-info {
+    display: flex;
+    gap: 20px;
+    font-size: 14px;
+    flex-wrap: wrap;
+}
+.battle-info .label { color: #888; margin-right: 4px; }
+.battle-info .value { color: #f0c060; font-weight: bold; }
+
+#btn-start-wave {
+    background: linear-gradient(135deg, #8a6520, #a08030);
+    color: #fff;
+    border: none;
+    padding: 8px 22px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: bold;
+    white-space: nowrap;
+}
+#btn-start-wave:hover { background: linear-gradient(135deg, #a08030, #c0a040); }
+#btn-start-wave:disabled { opacity: 0.5; cursor: not-allowed; }
+
+#btn-return {
+    background: #2a2a3e;
+    color: #aaa;
+    border: 1px solid #3a3a4e;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    cursor: pointer;
+}
+#btn-return:hover { background: #3a3a4e; }
+
+/* ==================== Canvas 区域 ==================== */
+#canvas-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #12121e;
+    overflow: auto;
+    padding: 10px;
+}
+
+#td-canvas {
+    border: 2px solid #3a3a4e;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* ==================== 弹出菜单 ==================== */
+#popup-menu {
+    display: none;
+    position: fixed;
+    background: #222436;
+    border: 1px solid #4a4a5e;
+    border-radius: 10px;
+    padding: 6px 0;
+    min-width: 150px;
+    z-index: 500;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+.popup-title {
+    padding: 6px 14px;
+    font-size: 12px;
+    color: #888;
+    border-bottom: 1px solid #2a2a3e;
+}
+.popup-btn {
+    padding: 8px 14px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background 0.15s;
+}
+.popup-btn:hover { background: #2a2a3e; }
+.popup-btn[data-action="sell"] { color: #ef4444; }

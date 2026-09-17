@@ -3,14 +3,12 @@ __pycache__/
 *.pyc
 *.pyo
 
-# 用户存档
-data/saves/
+# 存档
+web/save.json
 
 # IDE
 .vscode/
 .idea/
 
-# 旧版网页文件
-app.py
-static/
-templates/
+# 日志
+debug.log
